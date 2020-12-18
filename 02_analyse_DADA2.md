@@ -68,6 +68,7 @@ sample.namesfnRs
     ##  [9] "Station5_Surface1_11mars15_R2" "Station5_Surface2_10sept14_R2"
     ## [11] "Station5_Surface2_11mars15_R2"
 
+
 On sépare maintenant les R1 et les R2, pour cela on créer une variable
 FnFs qui contiendra les R1 et fnRs qui contiendra les R2.
 
@@ -83,8 +84,10 @@ plotQualityProfile(fnFs[1:2])
 plotQualityProfile(fnRs[1:2])
 ```
 
-![](02_analyse_DADA2_files/figure-gfm/unnamed-chunk-5-1.png)<!-- --> La
-fonction plotQualityProfile permet de créer une graphique permettant de
+![](02_analyse_DADA2_files/figure-gfm/unnamed-chunk-5-1.png)<!-- --> 
+
+
+La fonction plotQualityProfile permet de créer une graphique permettant de
 visualiser les scores de qualités.  
 En abscisse nous avons la position des paires de bases allant de 0 à 250
 pb. En ordonnée nous avons le score de qualité. La ligne en vert
@@ -157,6 +160,7 @@ filtRs
     ##                                            Station5_Surface2_11mars15_R2 
     ## "~/cc2_DADA2_import/CC2/filtered/Station5_Surface2_11mars15_R2_R2.fastq"
 
+
 Ici on va ranger les fichiers dans un dossier nommé filtered contenant
 les objets filtFs et filtRs.
 
@@ -174,6 +178,7 @@ head(out)
     ## Station5_Fond2_11mars15_R1.fastq      87585     79989
     ## Station5_Fond3_10sept14_R1.fastq     117140    106150
     ## Station5_Median1_10sept14_R1.fastq   116519    106745
+
 
 La fonction filterAndTrim permet de filtrer et couper les reads Forward
 et les reverse.  
@@ -212,6 +217,8 @@ plotErrors(errF, nominalQ=TRUE)
     ## Warning: Transformation introduced infinite values in continuous y-axis
 
 ![](02_analyse_DADA2_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+
+
 DADA2 analyse les variations de séquences et il va identifier et créer
 un modèle d’erreur grâce a la fonction learnErrors. Ce modèle d’erreur
 sera ensuite utiliser afin de corriger les reads du jeu de données.
@@ -260,6 +267,7 @@ dadaRs <- dada(filtRs, err=errR, multithread=TRUE)
     ## Sample 10 - 78645 reads in 22051 unique sequences.
     ## Sample 11 - 91534 reads in 28266 unique sequences.
 
+
 L’objet dadaFs reçoit le modèle d’erreur pour les reads forward et
 l’objet dadaRs reçoit le modèle d’erreur pour les reads revers Pour le
 1er échantillon, on avait 145448 reads et 45486 séquence unique avant la
@@ -295,6 +303,7 @@ mergers <- mergePairs(dadaFs, filtFs, dadaRs, filtRs, verbose=TRUE)
 
     ## 75048 paired-reads (in 3149 unique pairings) successfully merged out of 88514 (in 12054 pairings) input.
 
+
 La commande mergePairs permet la formation de contigs seulement quand
 cela est possible. Le read 1 fait 240 pb et le read 2 fait 160 pb donc
 nous avons un chevauchement entre les 2 séquences permettant ainsi la
@@ -309,6 +318,7 @@ dim(seqtab)
 ```
 
     ## [1]    11 19426
+
 
 On a créer un objet seqtable et de dans on y met une matrice
 d’observation de l’objet mergers grâce a la fonction
@@ -326,6 +336,7 @@ table(nchar(getSequences(seqtab)))
     ##    1    1    1    1    4  183   27  165  184 5608 3594 2312 2613 2738  126 1770 
     ##  376  377  378  382  386 
     ##   90    4    1    1    2
+
 
 A partir de seqtab on va pouvoir savoir combien de fois on retrouve une
 séquence a une certaine longueur en nucléotide. Les reads sont répartis
@@ -348,6 +359,7 @@ dim(seqtab.nochim)
 ```
 
     ## [1]   11 1557
+
 
 Les séquences chimériques doivent être éliminés du jeu de données sinon
 cela peut entrainer des erreurs lors de nos analyses. l’objet
@@ -388,6 +400,7 @@ head(track)
     ## Station5_Fond3_10sept14_R1   117140   106150    103806    104338  83613   64259
     ## Station5_Median1_10sept14_R1 116519   106745    104811    105173  86212   65559
 
+
 L’objet track correspond aux séquences après chaque étapes d’analyse
 réalisé ici. Pour la station5\_fond1\_10\_sept14\_R1 on passe de 159971
 à 87962 séquences. On a filtré un grand nombre de séquences.
@@ -422,6 +435,7 @@ head(taxa.print)
     ## [4,] "Clade I"          "Clade Ia"               
     ## [5,] "Clade II"         NA                       
     ## [6,] "Actinomarinaceae" "Candidatus Actinomarina"
+
 
 Ici nous pouvons inspecter les affectations taxonomiques. Les
 attributions vont rarement jusqu’à l’espèce car il est souvent
