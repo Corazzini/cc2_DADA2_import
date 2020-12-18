@@ -170,7 +170,7 @@ la diversité alpha est très élevé pour la profondeur "fond" et "surface" sur
 indices (Shannon et Simpson). Concernant septembre, on peut voir que
 l’indice alpha diversité est très élevé pour la profondeur "fond", un peu moins
 pour "médian" et très faible pour "surface" pour les 2 indices. Il semblerait
-donc avoir une correlation entre date (mois), la profondeur et la
+donc avoir une corrélation entre date (mois), la profondeur et la
 richesse.
 
 # Filtrage taxonomique
@@ -330,7 +330,7 @@ Ce graphique est une PCoA (suivant une distance de Bray-Curtis). Les
 ronds representent le mois de mars et les triangles representent le mois
 de septembre. Les différentes couleurs representent les niveaux de
 profondeurs (fond, médian, surface). Les axes correspondent aux variances
-c’est a dire a la distribution de la communauté microbienne dans les
+c’est à dire à la distribution de la communauté microbienne dans les
 échantillons.
 
 Pour l’axe 1, nous avons des triangles (le mois de septembre) qui sont
@@ -368,8 +368,8 @@ profondeur (surface, fond et médian) et en abscisse nous avons le mois
 Si nous comparons l’abondance des communautés microbienne entre le mois
 de mars et le mois de septembre, on peut voir que l’abondance du mois de
 mars est toujours plus faible par rapport au mois de septembre. On
-remarque également qu’il n y a pas de difference d’abondance entre les
-echantillons de fond et de surface pour le mois de mars. Cependant pour
+remarque également qu’il n y a pas de différence d’abondance entre les
+échantillons de fond et de surface pour le mois de mars. Cependant pour
 le mois de septembre on peut voir que l’abondance est plus élevée pour
 les échantillons du fond que pour les échantillons médian et surface.
 
@@ -395,8 +395,8 @@ On refait la même chose mais cette fois avec le genre.
 
 On peut voir que l’abondance de la communauté microbienne en mars est
 faible par rapport a l’abondance en septembre pour chaque profondeur. On
-remarque également qu’il n y a pas de difference d’abondance entre les
-echantillons de fond et de surface pour le mois de mars. Cependant pour
+remarque également qu’il n y a pas de différence d’abondance entre les
+échantillons de fond et de surface pour le mois de mars. Cependant pour
 le mois de septembre on peut voir que l’abondance est plus élevée pour
 les échantillons du fond que pour les échantillons médian et surface.
 
@@ -456,7 +456,7 @@ Le premier graphique correspond aux abondances avant la transformation
 
 En ordonnée nous avons la profondeur (surface, median et fond) et en
 abscisse nous avons la date (mars ou sept). Ce graphique on regarde la
-repartition de Amylibacter en fonction de la profondeur et des dates.
+répartition de Amylibacter en fonction de la profondeur et des dates.
 
 On retrouve Amylibacter au mois de mars et au mois de septembre avec des abondances a peu près similaires. Ce
 n’est donc pas un très bon biomarqueur car il a la fois en mars et en
@@ -490,7 +490,7 @@ grid.arrange(nrow = 2, plotBefore, plotAfter)
 ![](03_analyse_Phyloseq_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
 
 Ici on a fait la même chose. On peut voir que NS4 marine group est
-retrouvé en mars et en septembre. On remarque qu’il y a une plus grande
+retrouvé en mars et en septembre. On remarque qu’il y à une plus grande
 abondance de NSA marine group pour le mois de septembre par rapport au
 mois de mars. Ce n’est donc pas un très bon biomarqueur car on le
 retrouve quand même pour le mois de mars.
