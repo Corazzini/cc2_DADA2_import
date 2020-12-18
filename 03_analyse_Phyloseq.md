@@ -590,7 +590,7 @@ Synechococcus CC9902 pour le mois de septembre par rapport au mois de
 mars.
 
 Ces résultats sont plutôt très étonnants car avec les diplots on pouvait
-clairement voir que synechoccocus CC902 était très abondant pour le mois
+clairement voir que synechoccocus CC9902 était très abondant pour le mois
 de septembre et était principalement retrouvé que pendant le mois de
 septembre. On pouvait donc dire à partir de ces analyses que
 Synechococcus CC990 pouvait être utilisé comme biomarqueur pour les
