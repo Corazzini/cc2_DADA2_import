@@ -145,8 +145,8 @@ ps
     ## sample_data() Sample Data:       [ 11 samples by 2 sample variables ]
     ## tax_table()   Taxonomy Table:    [ 1557 taxa by 6 taxonomic ranks ]
 
-taxtab, samdf et seqtab sont regroupé dans l’objet ps. On peut voir
-combien de séquences sont identifiés dans chaque échantillons. Par
+taxtab, samdf et seqtab sont regroupés dans l’objet ps. On peut voir
+combien de séquences sont identifiés dans chaque échantillon. Par
 exemple nous avons 1557 taxa qui sont répartis en 11 échantillons et dans
 les 11 échantillons nous avons 2 variables.
 
@@ -162,14 +162,14 @@ plot_richness(ps, x="Date", measures=c("Shannon", "Simpson"), color="Profondeur"
 La fonction estimer\_richness estime un certain nombre de mesures de la diversité alpha.
 
 
-Ici nous pouvons visualiser la richesse sépcifique grâce à un indice
+Ici nous pouvons visualiser la richesse spécifique grâce à un indice
 alpha de diversité (indice de Shannone et indice de Simpson). En
 abscisse nous avons les mois (Date) et en ordonné la mesure de l’alpha
 diversité. On peut voir que pour la période de mars (période d’hiver),
 la diversité alpha est très élevé pour la profondeur "fond" et "surface" sur les 2
 indices (Shannon et Simpson). Concernant septembre, on peut voir que
 l’indice alpha diversité est très élevé pour la profondeur "fond", un peu moins
-pour "médian" et très faible pour "surface" pour les 2 indices. Il semblerai
+pour "médian" et très faible pour "surface" pour les 2 indices. Il semblerait
 donc avoir une correlation entre date (mois), la profondeur et la
 richesse.
 
@@ -287,7 +287,7 @@ plyr::ddply(prevdf, "Phylum", function(df1){cbind(mean(df1$Prevalence),sum(df1$P
     ## 24              Thermoplasmatota 2.722222   49
     ## 25             Verrucomicrobiota 3.788732  269
 
-Ici on peut regarder la prévalence des phyla. On retrouve les mêmes
+Ici on peut regarder la prévalence des phylas. On retrouve les mêmes
 résultats : Proteobacteria, Bacteroidota et Cyanobacteria sont les
 phyla les plus abondants.
 
@@ -329,13 +329,13 @@ plot_ordination(pslog, out.wuf.log, color = "Profondeur", shape="Date") +
 Ce graphique est une PCoA (suivant une distance de Bray-Curtis). Les
 ronds representent le mois de mars et les triangles representent le mois
 de septembre. Les différentes couleurs representent les niveaux de
-profondeurs (fond, médian, surface). Les axes correspond aux variances
+profondeurs (fond, médian, surface). Les axes correspondent aux variances
 c’est a dire a la distribution de la communauté microbienne dans les
 échantillons.
 
 Pour l’axe 1, nous avons des triangles (le mois de septembre) qui sont
 regroupés entre eux et les ronds (le mois de mars) qui sont regroupé
-entre eux également mais qui sont éloigné du mois de septembre. L’axe 1
+entre eux également mais qui sont éloignés du mois de septembre. L’axe 1
 nous montre donc la distribution de la communauté microbienne en
 fonction des saisons. Pour l’axe 2 nous pouvons voir la distribution de
 la communauté microbienne en fonction de la profondeur (pour le mois de
@@ -343,7 +343,7 @@ septembre). Par exemple, les échantillons proches de la surface sont
 regroupé entre eux et éloigné par rapport aux échantillons médian et les
 échantillons du fond.
 
-Nous avons donc pas les mêmes communauté microbienne en fonction des
+Nous n'avons donc pas les mêmes communautés microbiennes en fonction des
 saisons et au sein d’une même saisons (ici septembre) nous avons pas la
 même structure de la communauté microbienne en fonction des profondeurs.
 La profondeur a également un impacte mais il est moins important par
@@ -363,18 +363,18 @@ plot_bar(ps.top20, x="Date", fill="Family") + facet_wrap(~Profondeur, scales="fr
 On réalise un diagramme en batonnet dans lequel on prend les 20
 premières séquences. En ordonné nous avons les abondances pour chaque
 profondeur (surface, fond et médian) et en abscisse nous avons le mois
-(mars ou septembre). Les différentes couleurs correspond au familles.
+(mars ou septembre). Les différentes couleurs correspondent aux familles.
 
 Si nous comparons l’abondance des communautés microbienne entre le mois
 de mars et le mois de septembre, on peut voir que l’abondance du mois de
 mars est toujours plus faible par rapport au mois de septembre. On
 remarque également qu’il n y a pas de difference d’abondance entre les
 echantillons de fond et de surface pour le mois de mars. Cependant pour
-le mois de septembre on peut voir que l’abondance est plus élevé pour
+le mois de septembre on peut voir que l’abondance est plus élevée pour
 les échantillons du fond que pour les échantillons médian et surface.
 
 On peut voir que le clade I (orange/jaune) correspond a la famille qui
-est prédominante pour toutes les prodondeurs et pour le mois de mars et
+est prédominante pour toutes les profondeurs et pour le mois de mars et
 le mois de septembre. Les Cyanobiaceae est aussi une famille qui
 prédomine mais seulement pour le mois de septembre pour des profondeurs
 médian et surface.
@@ -394,19 +394,19 @@ plot_bar(ps.top20, x="Date", fill="Genus") + facet_wrap(~Profondeur, scales="fre
 On refait la même chose mais cette fois avec le genre.
 
 On peut voir que l’abondance de la communauté microbienne en mars est
-faibe par rapport a l’abondance en septembre pour chaque profondeur. On
+faible par rapport a l’abondance en septembre pour chaque profondeur. On
 remarque également qu’il n y a pas de difference d’abondance entre les
 echantillons de fond et de surface pour le mois de mars. Cependant pour
-le mois de septembre on peut voir que l’abondance est plus élevé pour
+le mois de septembre on peut voir que l’abondance est plus élevée pour
 les échantillons du fond que pour les échantillons médian et surface.
 
 Le clade Ia est le genre qui prédomine le plus dans toutes les
-conditions (mois et profondeur), sauf dans la conditon septembre en
+conditions (mois et profondeur), sauf dans la condition septembre en
 surface. Le Synechococcus CC9902 est également un genre très prédominant
 mais que dans la condition septembre en profondeur surface.
 
 Les saisons et les profondeurs vont donc avoir des influences sur les
-communautés microbienne (diversité, abondance et structure).
+communautés microbiennes (diversité, abondance et structure).
 
 D’après ces résltats il semblerai que pour le mois de septembre on
 retrouve spécifiquement : Synechococcus CC9902, NS4\_marine\_groupe.
@@ -437,7 +437,7 @@ relative.
 ps3rj = transform_sample_counts(ps, function(x){x / sum(x)})
 ```
 
-On convertit les compatages de chaque échantillon en leurs fréquences
+On convertit les comptages de chaque échantillon en leurs fréquences
 appelées proportions ou abondances relatives grâce à la fonction
 transform\_sample\_counts Maintenant on va tracer les valeurs
 d’abondances avant et après la transformation.
@@ -450,8 +450,8 @@ grid.arrange(nrow = 2, plotBefore, plotAfter)
 
 ![](03_analyse_Phyloseq_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
-Le premier graphique correspond aux abondance avant la transformation
-(ps) et le 2ème graphique correspond aux abondance après transformation
+Le premier graphique correspond aux abondances avant la transformation
+(ps) et le 2ème graphique correspond aux abondances après transformation
 (ps3rj)
 
 En ordonnée nous avons la profondeur (surface, median et fond) et en
@@ -524,7 +524,7 @@ grid.arrange(nrow = 2, plotBefore, plotAfter)
 
 Ici on a fait la même chose et on observe la même chose. NS5 marine
 group est retrouvé en mars et en septembre avec une abondance plus
-important pour le mois de septembre. Ce n’est donc pas un très bon
+importante pour le mois de septembre. Ce n’est donc pas un très bon
 biomarqueur.
 
 ``` r
@@ -554,7 +554,7 @@ grid.arrange(nrow = 2, plotBefore, plotAfter)
 ![](03_analyse_Phyloseq_files/figure-gfm/unnamed-chunk-28-1.png)<!-- -->
 
 Ici on a fait la même chose et on observe la même chose. SUP05 cluster
-est retrouvé en mars et en septembre avec une abondance plus important
+est retrouvé en mars et en septembre avec une abondance plus importante
 pour le mois de septembre. Ce n’est donc pas un très bon biomarqueur.
 
 ``` r
@@ -589,23 +589,23 @@ et en septembre. On remarque qu’il y a une plus grande abondance de
 Synechococcus CC9902 pour le mois de septembre par rapport au mois de
 mars.
 
-Ces résultats sont plutôt très étonnant car avec les diplots on pouvait
+Ces résultats sont plutôt très étonnants car avec les diplots on pouvait
 clairement voir que synechoccocus CC902 était très abondant pour le mois
 de septembre et était principalement retrouvé que pendant le mois de
-septembre. On pouvait donc dire a partir de ces analyse que
+septembre. On pouvait donc dire à partir de ces analyses que
 Synechococcus CC990 pouvait être utilisé comme biomarqueur pour les
-saisons d’été mais seulement pour des profondeur de surface et médian.
+saisons d’été mais seulement pour des profondeurs de surface et médian.
 
 Cependant avec ces dernières analyses on observe que Synechococcus
 CC9902 est également présent pour le mois de mars et de septembre mais
-avec une abondance beaucoup plus important pour le mois de septembre.
+avec une abondance beaucoup plus importante pour le mois de septembre.
 
 Synechococcus CC9902, NS4\_marine\_group et NS5\_marine\_group peuvent
 être utilisés comme biomarqueurs mais ils ne sont pas très précis, la
-seule difference qu’on peut observé entre les mois de mars et septembre
-ce sont les abondances qui sont beaucoup plus important pour le mois de
+seule difference qu’on peut observer entre les mois de mars et septembre
+ce sont les abondances qui sont beaucoup plus importants pour le mois de
 septembre.
 
 Concernant le mois d’hiver, on ne peut pas déterminer de biomarqueur,
-car les genres retrouvés pour le mois de mars sont egalement retrouvés
+car les genres retrouvés pour le mois de mars sont également retrouvés
 dans le mois de septembre.
