@@ -1,0 +1,47 @@
+---
+title: "Install packages"
+output: 
+  github_document:
+   toc: true
+   toc_depth: 2
+---
+
+#  mettre à jour la configuration de la VM
+
+```{bash}
+sudo apt-get update -y 
+sudo apt-get install -y libbz2-dev
+sudo apt-get install -y liblzma-dev
+sudo apt-get install -y libglpk-dev
+```
+
+
+#  installation du package
+```{r}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+BiocManager::install(version = '3.11')
+BiocManager::install("dada2", version = "3.11")
+BiocManager::install("phangorn")
+BiocManager::install("DECIPHER")
+BiocManager::install("DESseq2")
+BiocManager::install("ggplot2")
+BiocManager::install("phyloseq")
+BiocManager::install("Biostrings", version = "3.11")
+```
+
+
+#Phyloseq
+
+```{r}
+install.packages ("gridExtra")
+install.packages('grid.arrange')
+```
+
+
+#  knitr
+```{r}
+install.packages ("knitr")
+```
+
+

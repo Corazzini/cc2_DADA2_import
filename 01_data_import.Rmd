@@ -1,0 +1,24 @@
+---
+title: "data import"
+output: 
+  github_document:
+   toc: true
+   toc_depth: 2
+---
+
+# Importer les données
+```{bash}
+wget https://pagesperso.univ-brest.fr/~maignien/teaching/M1-MFA/UE-Ecogenomique2/EcoG2_data_cc2.tar.gz
+```
+
+# Décompresser les données
+```{bash}
+tar vxzf EcoG2_data_cc2.tar.gz
+```
+
+#  On importe la base de donnée silva
+```{bash}
+wget https://zenodo.org/record/3986799/files/silva_nr99_v138_train_set.fa.gz -nv
+```
+
+

@@ -1,0 +1,211 @@
+---
+title: "analyse Dada2"
+output: 
+  github_document:
+   toc: true
+   toc_depth: 2
+---
+
+
+# Preparation 
+```{r}
+# Appel la library
+library(dada2)
+```
+
+```{r}
+#Importer les jeux de données dans paths
+path <- "~/cc2_DADA2_import/CC2"
+list.files(path)
+```
+
+```{r}
+fnFs <- sort(list.files(path, pattern="1.fastq", full.names = TRUE))
+fnRs <- sort(list.files(path, pattern="2.fastq", full.names = TRUE))
+sample.namesfnFs <- sapply(strsplit(basename(fnFs), "\\."), `[`, 1)
+sample.namesfnRs <- sapply(strsplit(basename(fnRs), "\\."), `[`, 1)
+sample.namesfnFs
+sample.namesfnRs
+```
+On sépare maintenant les R1 et les R2, pour cela on créer une variable FnFs qui contiendra les R1 et fnRs qui contiendra les R2. 
+
+# Score de qualité des reads
+```{r}
+plotQualityProfile(fnFs[1:2])
+```
+
+
+```{r}
+plotQualityProfile(fnRs[1:2])
+```
+La fonction plotQualityProfile permet de créer une graphique permettant de visualiser les scores de qualités.  
+En abscisse nous avons la position des paires de bases allant de 0 à 250 pb. En ordonnée nous avons le score de qualité.
+La ligne en vert correspond au score de qualité moyen pour chaque position.
+La ligne en rouge correspond au seuil où le score de qualité est de 10.
+La ligne en orange correspond a quartile de la distribution du score de qualité.
+Concernant les reads Forward, on peut voir que en général le score de qualité est plutot bon, on descend pas en dessous du Q30 avant la position 240pb. 
+Concernant les reads Revers, on descend en dessous du Q30 a partir de la position 180pb.
+
+# Filtration des données
+```{r}
+# Placer les fichiers filtrés dans filtré
+filtFs <- file.path(path, "filtered", paste0(sample.namesfnFs, "_R1.fastq"))
+filtRs <- file.path(path, "filtered", paste0(sample.namesfnRs, "_R2.fastq"))
+names(filtFs) <- sample.namesfnFs
+names(filtRs) <- sample.namesfnRs
+filtFs
+filtRs
+```
+Ici on va ranger les fichiers dans un dossier nommé filtered contenant les objets filtFs et filtRs. 
+
+
+```{r}
+out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, trimLeft = 21, truncLen=c(240,200),
+              maxN=0, maxEE=c(2,2), truncQ=2, rm.phix=TRUE,
+              compress=TRUE, multithread=TRUE)
+head(out)
+```
+
+
+La fonction filterAndTrim permet de filtrer et couper les reads Forward et les reverse.  
+La fonction trimLeft = 21 permet d'éliminer les primers pour les reads Forward et les reads Reverse. 
+la fonction truncLen permet d'éliminer les nucléotides en position 240pb et 200pb pour conserver le meilleure score qualité pour les reads(au dessus du Q30).
+maxEE permet de recalculer le Qscore moyen apres avoir coupé une partie du read incriminé.
+MaxN=0 permet d'enlever toutes les bases dans lesquelles il y aura un N (A,T,G ou C) dans un read d'un jeu de données (le R1 et le R2).
+On peut voir qu'on a pas perdu beaucoup de read après la filtration.
+
+ 
+
+# Modèle d'erreur
+DADA2 calcul un model d'erreur à partir des données de séquençage. On applique cette méthode sur les reads forward puis reverse
+```{r}
+errF <- learnErrors(filtFs, multithread=TRUE)
+```
+
+
+```{r}
+errR <- learnErrors(filtRs, multithread=TRUE)
+```
+ 
+
+```{r}
+plotErrors(errF, nominalQ=TRUE)
+```
+DADA2 analyse les variations de séquences et il va identifier et créer un modèle d'erreur grâce a la fonction learnErrors. Ce modèle d'erreur sera ensuite utiliser afin de corriger les reads du jeu de données.
+
+Ce qu'on observe ici est un plot du modèle d'erreur généré par DADA2. En abscisse nous avont le Qscore et en ordonner la probabilité. On obtient donc la probabilité d'une mutation en fonction du Qscore. Pour A2A, la pobabilité qu'un A devient un A est très forte. Pour A2C, lorsque le Qscore est très élevé, la probabilité qu'un A devient un C est faible. Si le Qscore est faible, la probablité qu'un A donne un C est élevé. A l'inverse si le Qscore est élevé alors la probabilité qu'un A donne un C est faible. 
+La courbe en noir correspond au modèle d'erreur généré par DADA2. 
+
+# Inférence d'échantillon 
+
+```{r}
+dadaFs <- dada(filtFs, err=errF, multithread=TRUE)
+```
+
+
+```{r}
+dadaRs <- dada(filtRs, err=errR, multithread=TRUE)
+```
+L'objet dadaFs reçoit le modèle d'erreur pour les reads forward et l'objet dadaRs reçoit le modèle d'erreur pour les reads revers
+Pour le 1er échantillon, on avait 145448 reads et 45486 séquence unique avant la correction par DADA2.
+
+
+# Fusionner les reads appariées
+Aligner les R1 et les R2 en un contigs
+
+```{r}
+mergers <- mergePairs(dadaFs, filtFs, dadaRs, filtRs, verbose=TRUE)
+```
+La commande mergePairs permet la formation de contigs seulement quand cela est possible. 
+Le read 1 fait 240 pb et le read 2 fait 160 pb donc nous avons un chevauchement entre les 2 séquences permettant ansi la formation des contigs. 
+
+
+# Construire une table de séquence
+
+```{r}
+# Fait une table de sequence et l'affiche
+seqtab <- makeSequenceTable(mergers)
+dim(seqtab)
+```
+On a créer un objet seqtable et de dans on y met une matrice d'observation de l'objet mergers grâce a la fonction makeSequenceTable.
+la fonction dim permet d'avoir la dimension du tableau.
+Le nombre 11 correspond aux lignes et le nombre 19426 correspond aux colonnes. 
+
+```{r}
+# Inspecte la distribution des longueurs de séquence
+table(nchar(getSequences(seqtab)))
+```
+A partir de seqtab on va pouvoir savoir combien de fois on retrouve une séquence a une certaine longueur en nucléotide.
+Les reads sont répartis sur une plage assez resteinte. La majorité des reads ont une longueur de 369 pb. 
+
+# Supprimer les chimères
+ Une séquence chimère est une séquence d'ADN polymérisé par PCR mais qui n'a pas fini de se polymériser. 
+
+```{r}
+seqtab.nochim <- removeBimeraDenovo(seqtab, method="consensus", multithread=TRUE, verbose=TRUE)
+dim(seqtab.nochim)
+```
+Les séquences chimériques doivent être éliminés du jeu de données sinon cela peut entrainer des erreurs lors de nos analyses.
+l'objet seqtab.nochim est créée dans lequel la fonction removeBineraDenovo permet de supprimer les séquences chimériques.
+Ici nous avons identifié 17869 chimères sur les 19426 séquences. 
+
+
+```{r}
+sum(seqtab.nochim)/sum(seqtab)
+```
+```{r}
+1-sum(seqtab.nochim)/sum(seqtab)
+```
+
+Il y avait 22% des séquences qui était des séquences chimérique, celle ci ont donc était retiré du jeu de données.
+ 
+
+# Suivre les reads dans la pipeline
+
+```{r}
+getN <- function(x) sum(getUniques(x))
+track <- cbind(out, sapply(dadaFs, getN), sapply(dadaRs, getN), sapply(mergers, getN), rowSums(seqtab.nochim))
+colnames(track) <- c("input", "filtered", "denoisedF", "denoisedR", "merged", "nonchim")
+rownames(track) <- sample.namesfnFs
+head(track)
+```
+L'objet track correspond aux séquences après chaque étapes d'analyse réalisé ici. Pour la station5_fond1_10_sept14_R1 on passe de 159971 à 87962 séquences. On a filtré un grand nombre de séquences.
+
+
+# Assigniation taxonomique
+Nous allons assigner une taxonomie à nos taxons grâce à silva. Cette assignation taxonomique est déposée dans l'objet taxa.
+
+```{r}
+# Assigniation Taxonomique
+taxa <- assignTaxonomy(seqtab.nochim, "~/cc2_DADA2_import/silva_nr99_v138_train_set.fa.gz", multithread=TRUE)
+```
+
+```{r}
+taxa.print <- taxa
+rownames(taxa.print) <- NULL
+head(taxa.print)
+```
+Ici nous pouvons inspecter les affectations taxonomiques. Les attributions vont rarement jusqu'à l'espèce car il est souvent impossible de faire des assignations d'espèces sans ambiguité à partir d'un fragment du gène 16S. L'assignation s'arrête donc souvent à la famille et parfois au genre.
+
+
+
+```{r}
+# Sauvegarde des données dans l'environnement afin de les réutiliser
+save.image(file="02_analyse_DADA2_FinalEnv")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
