@@ -122,10 +122,6 @@ samdf <- data.frame(Profondeur=profondeur, Date=date)
 rownames(samdf) <- samples.out
 ```
 
-# Création d’un fichier csv
-
-On créer un fichier csv, et on va ordonné les mois ainsi que les
-profondeurs.
 
 ``` r
 # Creation d'un objet samdf
@@ -151,7 +147,7 @@ ps
 
 taxtab, samdf et seqtab sont regroupé dans l’objet ps. On peut voir
 combien de séquences sont identifiés dans chaque échantillons. Par
-exemple nous avons 1557 taxa sont répartis en 11 échantillons et dans
+exemple nous avons 1557 taxa qui sont répartis en 11 échantillons et dans
 les 11 échantillons nous avons 2 variables.
 
 # Visulation de la diversité alpha
@@ -163,18 +159,18 @@ plot_richness(ps, x="Date", measures=c("Shannon", "Simpson"), color="Profondeur"
 
 ![](03_analyse_Phyloseq_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
-Cette fonction estime un certain nombre de mesures de la diversité alpha
-à l’aide de la fonction estimer\_richness.
+La fonction estimer\_richness estime un certain nombre de mesures de la diversité alpha.
+
 
 Ici nous pouvons visualiser la richesse sépcifique grâce à un indice
 alpha de diversité (indice de Shannone et indice de Simpson). En
 abscisse nous avons les mois (Date) et en ordonné la mesure de l’alpha
 diversité. On peut voir que pour la période de mars (période d’hiver),
-la diversité alpha est très élevé pour le fond et la surface sur les 2
+la diversité alpha est très élevé pour la profondeur "fond" et "surface" sur les 2
 indices (Shannon et Simpson). Concernant septembre, on peut voir que
-l’indice alpha diversité est très élevé pour le fond, un peu moins
-pour médian et très faible pour surface pour les 2 indices. Il semblerai
-donc avoir une correlation entre saisons (mois), la profondeur et la
+l’indice alpha diversité est très élevé pour la profondeur "fond", un peu moins
+pour "médian" et très faible pour "surface" pour les 2 indices. Il semblerai
+donc avoir une correlation entre date (mois), la profondeur et la
 richesse.
 
 # Filtrage taxonomique
@@ -310,7 +306,7 @@ ggplot(prevdf1, aes(TotalAbundance, Prevalence / nsamples(ps),color=Phylum)) +
 la fonction facer\_wrap permet de faire plusieurs graphiques. Ce graphe
 represente donc la prévalence en fonction de l’abondance total pour
 chaque phyla. Les points correspondent a un taxon différent. On peut
-voir ici que les proteobacteria, les Bacteroidota ainsi que les
+voir ici que les Proteobacteria, les Bacteroidota ainsi que les
 Cyanobacteria ont une abondance relativement importante.
 
 ``` r
@@ -333,7 +329,7 @@ plot_ordination(pslog, out.wuf.log, color = "Profondeur", shape="Date") +
 Ce graphique est une PCoA (suivant une distance de Bray-Curtis). Les
 ronds representent le mois de mars et les triangles representent le mois
 de septembre. Les différentes couleurs representent les niveaux de
-profondeurs (fond, médian, surface). Les axes correspond aux variance
+profondeurs (fond, médian, surface). Les axes correspond aux variances
 c’est a dire a la distribution de la communauté microbienne dans les
 échantillons.
 
@@ -369,15 +365,19 @@ premières séquences. En ordonné nous avons les abondances pour chaque
 profondeur (surface, fond et médian) et en abscisse nous avons le mois
 (mars ou septembre). Les différentes couleurs correspond au familles.
 
+Si nous comparons l’abondance des communautés microbienne entre le mois
+de mars et le mois de septembre, on peut voir que l’abondance du mois de
+mars est toujours plus faible par rapport au mois de septembre. On
+remarque également qu’il n y a pas de difference d’abondance entre les
+echantillons de fond et de surface pour le mois de mars. Cependant pour
+le mois de septembre on peut voir que l’abondance est plus élevé pour
+les échantillons du fond que pour les échantillons médian et surface.
+
 On peut voir que le clade I (orange/jaune) correspond a la famille qui
 est prédominante pour toutes les prodondeurs et pour le mois de mars et
 le mois de septembre. Les Cyanobiaceae est aussi une famille qui
 prédomine mais seulement pour le mois de septembre pour des profondeurs
 médian et surface.
-
-Si nous comparons l’abondance des communautés microbienne entre le mois
-de mars et le mois de septembre, on peut voir que l’abondance du mois de
-mars est toujours plus faible par rapport au mois de septembre.
 
 Donc la saisons et la profondeur va avoir un imapct sur la diversité,
 l’abondance et sur la structure des communautés microbienne.
@@ -396,7 +396,7 @@ On refait la même chose mais cette fois avec le genre.
 On peut voir que l’abondance de la communauté microbienne en mars est
 faibe par rapport a l’abondance en septembre pour chaque profondeur. On
 remarque également qu’il n y a pas de difference d’abondance entre les
-echantillons de fons et de surface pour le mois de mars. Cependant pour
+echantillons de fond et de surface pour le mois de mars. Cependant pour
 le mois de septembre on peut voir que l’abondance est plus élevé pour
 les échantillons du fond que pour les échantillons médian et surface.
 
@@ -460,7 +460,7 @@ En ordonnée nous avons la profondeur (surface, median et fond) et en
 abscisse nous avons la date (mars ou sept). Ce graphique on regarde la
 repartition de Amylibacter en fonction de la profondeur et des dates.
 
-On retrouve Amylibacter au mois de mars et au mois de septembre. Ce
+On retrouve Amylibacter au mois de mars et au mois de septembre avec des abondances a peu près similaires. Ce
 n’est donc pas un très bon biomarqueur car il a la fois en mars et en
 septembre.
 
@@ -603,11 +603,11 @@ CC9902 est également présent pour le mois de mars et de septembre mais
 avec une abondance beaucoup plus important pour le mois de septembre.
 
 Synechococcus CC9902, NS4\_marine\_group et NS5\_marine\_group peuvent
-être utilisé comme biomarqueurs mais ils ne sont pas très précis, la
+être utilisés comme biomarqueurs mais ils ne sont pas très précis, la
 seule difference qu’on peut observé entre les mois de mars et septembre
 ce sont les abondances qui sont beaucoup plus important pour le mois de
 septembre.
 
 Concernant le mois d’hiver, on ne peut pas déterminer de biomarqueur,
-car les genres retrouvé pour le mois de mars sotn egalement retrouvé
+car les genres retrouvés pour le mois de mars sont egalement retrouvés
 dans le mois de septembre.
