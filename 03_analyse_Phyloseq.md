@@ -1,7 +1,7 @@
 analyse phyloseq
 ================
 
-  - [Création d’un fichier csv](#création-dun-fichier-csv)
+ 
   - [Visulation de la diversité
     alpha](#visulation-de-la-diversité-alpha)
   - [Filtrage taxonomique](#filtrage-taxonomique)
