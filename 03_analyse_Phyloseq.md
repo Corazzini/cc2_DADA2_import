@@ -409,11 +409,9 @@ Les saisons et les profondeurs vont donc avoir des influences sur les
 communautés microbienne (diversité, abondance et structure).
 
 D’après ces résltats il semblerai que pour le mois de septembre on
-retrouve spécifiquement : Synechococcus CC9902, NS4\_marine\_groupe,
-NS5\_marine\_groupe et Amylibacter.
+retrouve spécifiquement : Synechococcus CC9902, NS4\_marine\_groupe.
 
-SUP05 cluster est a la fois present dans le mois de mars et dans le mois
-de septembre.
+SUP05 cluster, NS5\_marine\_groupe et Amylibacter sont a la fois present dans le mois de mars (en plus faible abondance) et dans le mois de septembre.
 
 # Transformation de la valeur d’abondance
 
