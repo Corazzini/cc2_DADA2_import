@@ -297,7 +297,7 @@ mergers <- mergePairs(dadaFs, filtFs, dadaRs, filtRs, verbose=TRUE)
 
 La commande mergePairs permet la formation de contigs seulement quand
 cela est possible. Le read 1 fait 240 pb et le read 2 fait 160 pb donc
-nous avons un chevauchement entre les 2 séquences permettant ansi la
+nous avons un chevauchement entre les 2 séquences permettant ainsi la
 formation des contigs.
 
 # Construire une table de séquence
